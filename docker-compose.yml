@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ./backend
+    expose:
+      - "27277"
+    environment:
+      - OLLAMA_URL=http://ollama:11434/api/chat
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "8080:8080"
+    command: sh -c "npm run serve"
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html
+    # No need to run, NGINX will serve this
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./frontend/dist:/usr/share/nginx/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - frontend
+      - backend
+
+  ollama:
+    image: ollama/ollama
+    ports:
+      - "33333:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  ollama_data:

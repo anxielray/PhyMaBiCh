@@ -1,24 +1,54 @@
 <template>
-  <div class="chat-ui">
-    <div class="chat-container">
-      <div class="chat-box" ref="chatWindow">
-        <div v-for="(msg, index) in messages" :key="index" class="chat-message">
-          <div :class="msg.role === 'user' ? 'user-msg' : 'assistant-msg'">
-            <div :class="msg.role === 'user' ? 'bubble user-bubble' : 'bubble assistant-bubble'">
-              <strong class="role-label">{{ msg.role }}</strong>
-              {{ msg.content }}
+  <div class="page-wrapper">
+    <nav class="navbar">
+      <div class="logo">🧬 PhyMaBiCh</div>
+      <!-- <ul class="nav-links">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Features</a></li>
+        <li><a href="#">Test</a></li>
+        <li><a href="#">Docs</a></li>
+      </ul> -->
+      <div class="nav-right">
+        <!-- <button class="toggle-theme">☀️ / 🌙</button> -->
+        <div class="profile-circle">R</div>
+      </div>
+    </nav>
+
+    <div class="chat-ui">
+      <div class="chat-container">
+        <div class="chat-box" ref="chatWindow">
+          <div
+            v-for="(msg, index) in messages"
+            :key="index"
+            class="chat-message"
+          >
+            <div :class="msg.role === 'user' ? 'user-msg' : 'assistant-msg'">
+              <div
+                :class="msg.role === 'user'
+                  ? 'bubble user-bubble'
+                  : 'bubble assistant-bubble'"
+              >
+                <strong class="role-label">{{ msg.role }}</strong>
+                {{ msg.content }}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="input-area">
-        <input v-model="userInput" @keyup.enter="sendMessage" placeholder="Type your message..." class="chat-input" />
-        <button @click="sendMessage" class="send-button">Send</button>
+        <div class="input-area">
+          <input
+            v-model="userInput"
+            @keyup.enter="sendMessage"
+            placeholder="What's on your mind?..."
+            class="chat-input"
+          />
+          <button @click="sendMessage" class="send-button">Talk</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -89,7 +119,7 @@ export default {
       } catch (error) {
         this.messages.push({
           role: "assistant",
-          content: "⚠️ Sorry, there was an error getting a response.",
+          content: "\n⚠️ Sorry, there was an error getting a response. Try again later!",
         });
       }
     },
@@ -106,8 +136,11 @@ html {
   font-family: 'Inter', sans-serif;
   background: linear-gradient(to bottom right, #111827, #1f2937);
   color: white;
-  height: 100%;
+  height: 100vh;
+  overflow: hidden;
+  /* height: 100%; */
 }
+/* max-height: 90vh; */
 
 .chat-ui {
   min-height: 100vh;
@@ -118,19 +151,25 @@ html {
 }
 
 .chat-container {
-  width: 100%;
-  max-width: 700px;
+  width: 50%;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  border: solid 1px rgb(255, 199, 95);
+  overflow: auto;
+  border-radius: 1rem;
 }
 
 .chat-box {
   background-color: #1f2937;
-  border-radius: 1rem;
+  border-bottom: none;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
   padding: 1.5rem;
-  height: 600px;
+  height: auto;
+  min-height: 7em;
+  max-block-size: 100%;
   overflow-y: auto;
+  width: auto;
   scroll-behavior: smooth;
 }
 
@@ -149,7 +188,7 @@ html {
 .bubble {
   display: inline-block;
   padding: 0.5rem 1rem;
-  border-radius: 9999px;
+  border-radius: 19px;
   font-size: 0.875rem;
   max-width: 80%;
   word-break: break-word;
@@ -162,8 +201,9 @@ html {
 }
 
 .assistant-bubble {
-  background-color: #374151;
+  background: none;
   color: white;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 .role-label {
@@ -179,17 +219,21 @@ html {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  box-shadow: 8px #000000, 4px #000000;
+  border-bottom-right-radius: -100px;
 }
 
 .chat-input {
   flex: 1;
   padding: 0.75rem 1rem;
-  background-color: #374151;
+  background-color: #1f2937;
+  border-bottom-left-radius: 19px;
   border: none;
-  border-radius: 9999px;
   font-size: medium;
+  padding: 1em;
   color: white;
   outline: none;
+  flex-shrink: 0;
 }
 
 .chat-input::placeholder {
@@ -197,13 +241,13 @@ html {
 }
 
 .send-button {
-  background-color: #0284c7;
-  padding: 0.75rem 1rem;
-  border: none;
-  border-radius: 9999px;
+  background-color: #1f2937;
+  padding: 0.75rem;
+  border-bottom-right-radius: 1rem;
   font-weight: bold;
   font-size: 0.875rem;
-  color: white;
+  margin: 0;
+  color: rgb(255, 199, 95);
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -221,4 +265,99 @@ html {
   background: #4b5563;
   border-radius: 3px;
 }
+
+/* === NAVBAR STYLING === */
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.navbar {
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3); */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: rgb(255, 199, 95);
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  position: relative;
+  padding: 0.25rem;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: rgb(255, 199, 95);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: rgb(255, 199, 95);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.toggle-theme {
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: white;
+}
+
+.profile-circle {
+  background-color: rgb(255, 199, 95);
+  color: #111827;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.profile-circle:hover {
+  transform: scale(1.1);
+}
+
 </style>

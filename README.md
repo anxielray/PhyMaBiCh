@@ -6,6 +6,7 @@ PhyMaBiCh is an AI project made for the nerdy brains for learning Mathematics, c
 
 - [PhyMaBiCh](#phymabich)
   - [Contents](#contents)
+  - [Installation](#installation)
   - [Project Structure](#project-structure)
     - [Documentation](#documentation)
     - [Backend](#backend)
@@ -13,6 +14,14 @@ PhyMaBiCh is an AI project made for the nerdy brains for learning Mathematics, c
   - [Tech Stack](#tech-stack)
   - [How To Use PhiMaBiCh](#how-to-use-phimabich)
     - [As a Developer](#as-a-developer)
+
+## Installation
+
+- _The application is dockerized. Run this command to compose up the file;_
+
+```sh
+docker-compose up --build
+```
 
 ## Project Structure
 

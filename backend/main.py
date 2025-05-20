@@ -13,7 +13,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OLLAMA_URL = "http://localhost:11434/api/chat"
+OLLAMA_URL = "http://localhost:11434/api/chat" ## change this line "localhost" to "ollama" when running with docker.
 
 @app.post("/chat")
 async def chat(request: Request):
